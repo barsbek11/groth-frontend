@@ -5,10 +5,16 @@ export const LoginPage = () => {
 	return (
 		<div>
 			<Typography
-				fontFamily='Poppins'
+				fontFamily='Open Sans'
 				textAlign='center'
 				variant='h4'
 				component='h2'
+				sx={{
+					color: '#2B2B2B',
+					fontWeight: 700,
+					fontSize: '24px',
+					margin: '20px 0 32px 0',
+				}}
 			>
 				Войдите в свой профиль
 			</Typography>
@@ -16,35 +22,34 @@ export const LoginPage = () => {
 				margin='normal'
 				fullWidth={true}
 				id='standard-basic'
-				label='e-Mail'
-				variant='standard'
-				placeholder='Введите ваш e-Mail'
+				label='Email'
+				variant='outlined'
 			/>
 			<TextField
 				margin='normal'
 				fullWidth={true}
 				id='standard-basic'
 				label='Пароль'
-				variant='standard'
-				placeholder='Введите ваш пароль'
+				variant='outlined'
 				type='password'
 			/>
 			<Button
-				sx={{ margin: '10px', background: '#000' }}
+				sx={{ marginTop: '44px', marginBottom: '15px', background: '#000' }}
 				fullWidth={true}
 				variant='contained'
 			>
 				Войти
 			</Button>
 			<Typography
-				fontFamily='Poppins'
+				fontFamily='Open Sans'
 				textAlign='center'
-				variant='body1'
+				variant='body2'
 				component='h2'
+				color='#909090'
 			>
-				У вас нет аккаунта ?
+				Еще не зарегистрированы ?
 				<Link style={{ marginLeft: '5px' }} to='/register'>
-					Регистрация
+					Создать Аккаунт
 				</Link>
 			</Typography>
 		</div>
