@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
 import { AuthRootComponent } from './components/auth'
 import { HomePage } from './components/home'
 import { NotFoundRootComponent } from './components/not-found'
@@ -15,6 +16,7 @@ const App = () => {
 				<Route path='/login' element={<AuthRootComponent />} />
 				<Route path='*' element={<NotFoundRootComponent />} />
 			</Routes>
+			<ToastContainer />
 		</div>
 	)
 }

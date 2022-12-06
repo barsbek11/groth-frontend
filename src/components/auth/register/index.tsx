@@ -1,7 +1,15 @@
 import { Button, TextField, Typography } from '@mui/material'
+import { FC } from 'react'
 import { Link } from 'react-router-dom'
+import { IPropsRegister } from '../../../common/types'
 
-export const RegisterPage = () => {
+export const RegisterPage: FC<IPropsRegister> = ({
+	setEmail,
+	setPassword,
+	setFirstName,
+	setUsername,
+	setRepeatPassword,
+}: IPropsRegister): JSX.Element => {
 	return (
 		<div>
 			<Typography
@@ -19,6 +27,7 @@ export const RegisterPage = () => {
 				Создайте свой профиль
 			</Typography>
 			<TextField
+				onChange={e => setFirstName(e.target.value)}
 				margin='normal'
 				fullWidth={true}
 				id='standard-basic'
@@ -27,6 +36,7 @@ export const RegisterPage = () => {
 				type='text'
 			/>
 			<TextField
+				onChange={e => setEmail(e.target.value)}
 				margin='normal'
 				fullWidth={true}
 				id='standard-basic'
@@ -35,6 +45,7 @@ export const RegisterPage = () => {
 				type='email'
 			/>
 			<TextField
+				onChange={e => setPassword(e.target.value)}
 				margin='normal'
 				fullWidth={true}
 				id='standard-basic'
@@ -43,6 +54,7 @@ export const RegisterPage = () => {
 				type='password'
 			/>
 			<TextField
+				onChange={e => setRepeatPassword(e.target.value)}
 				margin='normal'
 				fullWidth={true}
 				id='standard-basic'
@@ -66,6 +78,7 @@ export const RegisterPage = () => {
 					background: '#000',
 					fontFamily: 'Open Sans',
 				}}
+				type='submit'
 				fullWidth={true}
 				variant='contained'
 			>

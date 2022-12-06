@@ -1,28 +1,42 @@
 import { Box } from '@mui/material'
-import { useState } from 'react'
-import { useLocation } from 'react-router-dom'
+import { FC, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { LoginPage } from './login'
 import { RegisterPage } from './register'
 import style from './style.module.scss'
-import axios from 'axios'
+import { toast } from 'react-toastify'
+import { instance } from '../../utils/axios'
 
-export const AuthRootComponent = () => {
+export const AuthRootComponent: FC = (): JSX.Element => {
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
+	const [firstName, setFirstName] = useState('')
+	const [username, setUsername] = useState('')
+	const [repeatPassword, setRepeatPassword] = useState('')
 
 	const location = useLocation()
+	const navigate = useNavigate()
 
 	const handleSubmit = async (e: any) => {
 		e.preventDefault()
 
-		const userData = {
-			email,
-			password,
+		if (location.pathname === '/login') {
+			const userData = {
+				email,
+				password,
+			}
+			const user = await instance.post('auth/login', userData)
+			toast(`Welcome, ${user.data.user.firstName}`)
+			navigate('/')
+		} else {
+			const newUser = {
+				firstName,
+				username,
+				email,
+				password,
+			}
+			const user = await instance.post('auth/register', newUser)
 		}
-
-		const user = await axios.post('http://localhost:5000/login', userData)
-
-		console.log(userData)
 	}
 
 	return (
@@ -39,7 +53,13 @@ export const AuthRootComponent = () => {
 					padding={5}
 				>
 					{location.pathname === '/register' ? (
-						<RegisterPage />
+						<RegisterPage
+							setEmail={setEmail}
+							setPassword={setPassword}
+							setFirstName={setFirstName}
+							setUsername={setUsername}
+							setRepeatPassword={setRepeatPassword}
+						/>
 					) : location.pathname === '/login' ? (
 						<LoginPage setEmail={setEmail} setPassword={setPassword} />
 					) : null}
