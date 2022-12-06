@@ -1,7 +1,12 @@
 import { Button, TextField, Typography } from '@mui/material'
+import { FC } from 'react'
 import { Link } from 'react-router-dom'
+import { IPropsLogin } from '../../../common/types'
 
-export const LoginPage = ({ setEmail, setPassword }: any) => {
+export const LoginPage: FC<IPropsLogin> = ({
+	setEmail,
+	setPassword,
+}: IPropsLogin): JSX.Element => {
 	return (
 		<div>
 			<Typography
