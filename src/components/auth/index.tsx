@@ -6,6 +6,8 @@ import { RegisterPage } from './register'
 import style from './style.module.scss'
 import { toast } from 'react-toastify'
 import { instance } from '../../utils/axios'
+import { useAppDispatch } from '../../utils/hooks'
+import { login } from '../../redux/slice/auth'
 
 export const AuthRootComponent: FC = (): JSX.Element => {
 	const [email, setEmail] = useState('')
@@ -13,21 +15,27 @@ export const AuthRootComponent: FC = (): JSX.Element => {
 	const [firstName, setFirstName] = useState('')
 	const [username, setUsername] = useState('')
 	const [repeatPassword, setRepeatPassword] = useState('')
-
 	const location = useLocation()
 	const navigate = useNavigate()
+	const dispatch = useAppDispatch()
 
-	const handleSubmit = async (e: any) => {
+	const handleSubmit = async (e: { preventDefault: () => void }) => {
 		e.preventDefault()
 
 		if (location.pathname === '/login') {
-			const userData = {
-				email,
-				password,
+			try {
+				const userData = {
+					email,
+					password,
+				}
+				const user = await instance.post('auth/login', userData)
+				await dispatch(login(user.data))
+				toast(`Welcome, ${user.data.user.firstName}`)
+				navigate('/')
+			} catch (error) {
+				toast.error('Неудалось 🥺')
+				return error
 			}
-			const user = await instance.post('auth/login', userData)
-			toast(`Welcome, ${user.data.user.firstName}`)
-			navigate('/')
 		} else {
 			const newUser = {
 				firstName,
@@ -36,6 +44,7 @@ export const AuthRootComponent: FC = (): JSX.Element => {
 				password,
 			}
 			const user = await instance.post('auth/register', newUser)
+			navigate('/')
 		}
 	}
 
